@@ -21,19 +21,30 @@ button{display:block;margin:auto;width:60%;padding:18px;border:none;border-radiu
 .decor{position:absolute;color:#4b73ff66;font-size:4rem;font-weight:bold}
 .pi{top:10px;right:20px}.sqrt{left:20px;top:300px}.fx{right:20px;top:300px}
 .tag{text-align:center;margin-top:24px;color:#5fe4ff;font-size:1.4rem}
-canvas{position:fixed;inset:0;pointer-events:none}
+.celebration-overlay{position:absolute;inset:0;pointer-events:none}
+.balloon,.hat,.popup{position:absolute;pointer-events:none;opacity:0;animation:appear 1s ease forwards}
+.balloon{width:26px;height:36px;border-radius:50% 50% 50% 50%;background:#ff4eff;box-shadow:0 0 18px rgba(255,78,255,0.35);}
+.balloon::after{content:'';position:absolute;left:50%;bottom:-14px;width:2px;height:18px;background:rgba(255,255,255,0.75);transform:translateX(-50%);}
+.hat{width:60px;height:30px;border-radius:0 0 12px 12px;background:#0ff;box-shadow:0 0 20px rgba(0,255,255,0.18);}
+.hat::before{content:'';position:absolute;left:50%;top:-12px;width:38px;height:14px;background:#4b8cff;border-radius:10px;transform:translateX(-50%);}
+.popup{padding:12px 18px;background:rgba(8,16,52,.95);border:1px solid rgba(102,208,255,.3);border-radius:18px;color:#cff;backdrop-filter:blur(10px);font-size:0.95rem;}
+.success-text{font-size:2.3rem;line-height:1.4;color:#7dff9d;text-shadow:0 0 24px rgba(125,255,157,0.25);}
+@keyframes appear{0%{opacity:0;transform:scale(0.72) translateY(10px);}100%{opacity:1;transform:scale(1) translateY(0);}}
+@keyframes floatUp{0%{transform:translateY(0);}100%{transform:translateY(-180px);}}
+@keyframes wiggle{0%,100%{transform:translateX(0);}50%{transform:translateX(8px);}}
 @media(max-width:700px){.big{font-size:3rem}.dept{font-size:1.5rem}.q{font-size:2rem}button{width:100%}}
 </style>
 </head>
 <body>
 <canvas id="fx"></canvas>
+<div id="celebrationContainer" class="celebration-overlay"></div>
 <div class="frame">
-<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg">
+<img class="logo" src="assets/dps-logo.svg" alt="DPSBN Logo">
 <div class="small">Welcome to DPSBN</div>
 <div class="big">STEAM EXHIBITION</div>
 <div class="dept">Math Department</div>
 <div class="rule"></div>
-<div class="q">I am an odd number.<br>Remove one letter,<br>I become even.<br>What number am I?</div>
+<div class="q" id="questionBox">I am an odd number.<br>Remove one letter,<br>I become even.<br>What number am I?</div>
 <input id="ans" placeholder="Type your answer">
 <button id="check">SUBMIT →</button>
 <div id="msg"></div>
@@ -45,8 +56,25 @@ const answers=["seven","7"];
 check.onclick=()=>{
  let ok=answers.includes(ans.value.trim().toLowerCase());
  msg.style.color=ok?"#7dff9d":"#ff9090";
- msg.innerHTML=ok?"🎉 <b>ACCESS GRANTED!</b><br>IQ Loading...100%":"❌ Incorrect! Try again.";
- if(ok)launch();
+ if(ok) {
+   questionBox.innerHTML="<div class='success-text'>🎉 <strong>ACCESS GRANTED!</strong><br>Authentication successful.<br>IQ Loading... 100%. 🧠📐</div>";
+   ans.disabled=true;
+   check.disabled=true;
+   msg.innerHTML="";
+   startCelebration();
+   launch();
+ } else {
+   msg.innerHTML="❌ Incorrect! Try again.";
+ }
+}
+function startCelebration(){
+ const container=document.getElementById('celebrationContainer');
+ container.innerHTML='';
+ const colors=['#4dff73','#ff5bff','#4ec5ff','#ffd55d'];
+ for(let i=0;i<14;i++){const b=document.createElement('div');b.className='balloon';b.style.left=`${5+i*6}%`;b.style.bottom='16px';b.style.background=colors[i%colors.length];b.style.animation=`appear 0.9s ease ${i*0.08}s forwards, floatUp ${3.5+Math.random()*1.5}s ease ${i*0.08}s forwards`;container.appendChild(b);} 
+ for(let i=0;i<6;i++){const h=document.createElement('div');h.className='hat';h.style.left=`${10+i*14}%`;h.style.top=`${30+Math.random()*40}%`;h.style.animation=`appear 0.9s ease ${0.4+i*0.1}s forwards, wiggle 1.6s ease ${0.4+i*0.1}s infinite alternate`;container.appendChild(h);} 
+ const messages=['Great job!','Well done!','Quiz unlocked!','Bravo!'];
+ for(let i=0;i<3;i++){const p=document.createElement('div');p.className='popup';p.textContent=messages[i];p.style.left=`${15+i*28}%`;p.style.top=`${45 - i*6}%`;p.style.animationDelay=`${0.5+i*0.2}s`;container.appendChild(p);} 
 }
 function launch(){
 const c=fx,x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
