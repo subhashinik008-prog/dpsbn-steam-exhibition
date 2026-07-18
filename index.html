@@ -5,25 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DPSBN STEAM Exhibition</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:radial-gradient(circle at top,#122a73,#04081f 70%);color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;overflow:hidden}
-body:before{content:"";position:fixed;inset:0;background:
-radial-gradient(#4cf3ff33 1px,transparent 1px);background-size:28px 28px;opacity:.2}
-.frame{position:relative;width:min(900px,95vw);padding:28px;border:2px solid #49c8ff;border-radius:34px;background:rgba(8,16,52,.55);box-shadow:0 0 25px #2aa8ff80,inset 0 0 20px #102d6a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:radial-gradient(circle at top,#122a73,#04081f 70%);color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;overflow:auto;padding:env(safe-area-inset-top,20px) env(safe-area-inset-right,12px) env(safe-area-inset-bottom,20px) env(safe-area-inset-left,12px)}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(#4cf3ff33 1px,transparent 1px);background-size:28px 28px;opacity:.18}
+.frame{position:relative;width:min(900px,100%);max-width:920px;padding:clamp(12px,4vw,28px);border:2px solid #49c8ff;border-radius:34px;background:rgba(8,16,52,.55);box-shadow:0 0 25px #2aa8ff80,inset 0 0 20px #102d6a;max-height:calc(100vh - 40px);overflow:auto}
 .logo{width:90px;max-width:90px;height:auto;max-height:90px;border-radius:50%;display:block;margin:0 auto 10px;background:#fff;padding:4px;object-fit:contain}
-.small{font-size:2rem;text-align:center;font-weight:700}
-.big{text-align:center;font-size:5rem;font-weight:900;letter-spacing:2px;background:linear-gradient(#fff,#9fd2ff,#fff);-webkit-background-clip:text;color:transparent;text-shadow:0 0 12px #5fb8ff}
-.dept{text-align:center;font-size:2.4rem;color:#59d8ff;font-weight:700}
+.small{font-size:clamp(1.1rem,3.2vw,2rem);text-align:center;font-weight:700}
+.big{text-align:center;font-size:clamp(2rem,6vw,4.2rem);font-weight:900;letter-spacing:2px;background:linear-gradient(#fff,#9fd2ff,#fff);-webkit-background-clip:text;color:transparent;text-shadow:0 0 12px #5fb8ff}
+.dept{text-align:center;font-size:clamp(1rem,3vw,2.4rem);color:#59d8ff;font-weight:700}
 .rule{height:2px;background:linear-gradient(90deg,#ff5cff,#46d7ff,#ff5cff);margin:18px auto;width:80%}
-.q{border:2px solid #9d4dff;border-radius:24px;padding:30px;background:rgba(8,10,40,.5);font:italic 3rem Georgia,serif;text-align:center;line-height:1.4}
-input{margin:26px 0;width:100%;padding:18px;border-radius:18px;border:2px solid #4ca8ff;background:#0d1738;color:#fff;font-size:1.4rem}
-button{display:block;margin:auto;width:36%;padding:20px;border:none;border-radius:50px;font-size:1.9rem;font-weight:800;background:linear-gradient(#3ee65f,#08963d);color:#fff;box-shadow:0 0 20px #39ff6c;cursor:pointer}
-#msg{text-align:center;margin-top:20px;font-size:1.2rem}
-.success-text{display:inline-block;color:#7dff9d;font-size:3rem;font-weight:900;letter-spacing:0.04em;text-shadow:0 0 18px rgba(125,255,157,0.25);line-height:1;}
+.q{border:2px solid #9d4dff;border-radius:24px;padding:18px;background:rgba(8,10,40,.5);font:italic clamp(1.3rem,4vw,2.2rem) Georgia,serif;text-align:center;line-height:1.35}
+input{margin:18px 0;width:100%;padding:14px;border-radius:14px;border:2px solid #4ca8ff;background:#0d1738;color:#fff;font-size:clamp(1rem,3.6vw,1.2rem)}
+button{display:block;margin:12px auto;width:36%;padding:16px;border:none;border-radius:50px;font-size:1.6rem;font-weight:800;background:linear-gradient(#3ee65f,#08963d);color:#fff;box-shadow:0 0 20px #39ff6c;cursor:pointer}
+#msg{text-align:center;margin-top:18px;font-size:1.1rem}
+.success-text{display:inline-block;color:#7dff9d;font-size:clamp(1.8rem,6vw,3.2rem);font-weight:900;letter-spacing:0.02em;text-shadow:0 0 18px rgba(125,255,157,0.25);line-height:1}
+.success-emoji{font-size:clamp(1.8rem,6vw,3.2rem);vertical-align:middle;margin-right:8px}
+.error-text{display:inline-block;color:#ff8b8b;font-size:clamp(1.8rem,6vw,3.2rem);font-weight:800;vertical-align:middle}
+.error-emoji{font-size:clamp(1.8rem,6vw,3.2rem);vertical-align:middle;margin-right:8px}
 .decor{position:absolute;color:#4b73ff66;font-size:4rem;font-weight:bold}
 .pi{top:10px;right:20px}.sqrt{left:20px;top:300px}.fx{right:20px;top:300px}
-.tag{text-align:center;margin-top:24px;color:#5fe4ff;font-size:1.4rem}
+.tag{text-align:center;margin-top:14px;color:#5fe4ff;font-size:1.1rem}
 canvas{position:fixed;inset:0;pointer-events:none}
-@media(max-width:700px){.big{font-size:3rem}.dept{font-size:1.5rem}.q{font-size:2rem}button{width:100%}}
+@media(max-width:700px){.big{font-size:clamp(1.8rem,6vw,3rem)}.dept{font-size:1.2rem}.q{font-size:clamp(1.25rem,4.2vw,1.8rem)}button{width:86%}}
 </style>
 </head>
 <body>
@@ -47,10 +50,10 @@ check.onclick=()=>{
  let ok=answers.includes(ans.value.trim().toLowerCase());
  msg.style.color=ok?"#7dff9d":"#ff9090";
  if(ok) {
-   msg.innerHTML="🎉 <span class='success-text'>ACCESS GRANTED!</span>";
+   msg.innerHTML = "<span class='success-emoji'>🎉</span> <span class='success-text'>ACCESS GRANTED!</span>";
    launch();
  } else {
-   msg.innerHTML="❌ Incorrect! Try again.";
+   msg.innerHTML = "<span class='error-emoji'>❌</span> <span class='error-text'>Incorrect! Try again.</span>";
  }
 }
 function launch(){
