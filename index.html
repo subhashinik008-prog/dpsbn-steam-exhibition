@@ -9,7 +9,7 @@
 body:before{content:"";position:fixed;inset:0;background:
 radial-gradient(#4cf3ff33 1px,transparent 1px);background-size:28px 28px;opacity:.2}
 .frame{position:relative;width:min(900px,95vw);padding:28px;border:2px solid #49c8ff;border-radius:34px;background:rgba(8,16,52,.55);box-shadow:0 0 25px #2aa8ff80,inset 0 0 20px #102d6a}
-.logo{width:90px;height:90px;border-radius:50%;display:block;margin:0 auto 10px;background:#fff;padding:4px}
+.logo{width:90px;max-width:90px;height:auto;max-height:90px;border-radius:50%;display:block;margin:0 auto 10px;background:#fff;padding:4px;object-fit:contain}
 .small{font-size:2rem;text-align:center;font-weight:700}
 .big{text-align:center;font-size:5rem;font-weight:900;letter-spacing:2px;background:linear-gradient(#fff,#9fd2ff,#fff);-webkit-background-clip:text;color:transparent;text-shadow:0 0 12px #5fb8ff}
 .dept{text-align:center;font-size:2.4rem;color:#59d8ff;font-weight:700}
@@ -28,7 +28,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <body>
 <canvas id="fx"></canvas>
 <div class="frame">
-<img class="" src="assets/dps-logo.jpeg" alt="DPSBN Logo">
+<img class="logo" src="assets/dps-logo.jpeg" alt="DPSBN Logo">
 <div class="small">Welcome to DPSBN</div>
 <div class="big">STEAM EXHIBITION</div>
 <div class="dept">Math Department</div>
